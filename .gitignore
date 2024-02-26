@@ -1,0 +1,9 @@
+creds.txt
+
+# tt foldes
+bin/
+distfiles/
+include/
+instances.enabled/
+modules/
+templates/
