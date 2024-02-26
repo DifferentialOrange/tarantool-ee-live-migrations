@@ -21,4 +21,6 @@ Run migration (with post-run cleanup):
 ```bash
 tt run migrations/0x_<something>.lua
 ```
-(Use a separate ternimal to execute code on the `storage-a-001` server.)
+Use a separate ternimal to execute code on the `storage-a-001` server.
+The numbers are just means to structure the code, they do not bear any meaning
+like in tarantool/migrations.
