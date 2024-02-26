@@ -10,6 +10,6 @@ return function()
     })
     box.space['data']:create_index('pk', {parts = {'id'}, if_not_exists = true})
 
-    box.space['data']:replace({1, 's1s2s3'})
-    box.space['data']:replace({2, '1w2w3wwwwww'})
+    box.space['data']:replace({1, 's1 s2'})
+    box.space['data']:replace({2, '1w 2w3wwwwww'})
 end

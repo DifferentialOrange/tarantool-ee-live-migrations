@@ -18,6 +18,8 @@ local function introspect(conn, space_name)
         space_name = 'data'
     end
 
+    conn:reload_schema()
+
     local rows = conn.space[space_name]:select(nil, {limit = 1000})
     for i, row in ipairs(rows) do
         local map_row = row:tomap{names_only = true}
@@ -35,8 +37,12 @@ end
 local function run_migration(func)
     local conn = connect()
 
+    print('Before migration:')
+    introspect(conn)
+
     call(conn, func)
 
+    print('After migration:')
     introspect(conn)
 
     cleanup(conn)
