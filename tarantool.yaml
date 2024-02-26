@@ -1,0 +1,17 @@
+credentials:
+  users:
+    client:
+      password: pass
+      roles: [super]
+
+groups:
+  storages:
+    app:
+      module: storage
+    replicasets:
+      storage-a:
+        instances:
+          storage-a-001:
+            iproto:
+              listen:
+              - uri: 'localhost:3301'
