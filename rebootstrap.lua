@@ -1,9 +1,13 @@
+local fio = require('fio')
+
 return function()
-    local spaces = {
-        require('space.01_data'),
-        require('space.02_customers'),
-        require('space.03_numerical'),
-    }
+    local spaces = {}
+    local space_files = fio.listdir('./space')
+    for _, file in ipairs(space_files) do
+        local require_path = ('space.' .. file):gsub('.lua$', '')
+        local module =require(require_path)
+        table.insert(spaces, module)
+    end
 
     for _, space in ipairs(spaces) do
         space.reinit()
