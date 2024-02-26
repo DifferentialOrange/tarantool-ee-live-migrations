@@ -24,3 +24,8 @@ tt run migrations/0x_<something>.lua
 Use a separate ternimal to execute code on the `storage-a-001` server.
 The numbers are just means to structure the code, they do not bear any meaning
 like in tarantool/migrations.
+
+If something went wrong:
+- stop the server,
+- `rm -rf ./var/lib/storage-a-001/*`,
+- start the server anew.
