@@ -1,15 +1,12 @@
 return function()
-    if box.space['data'] ~= nil then
-        box.space['data']:drop()
+    local spaces = {
+        require('space.01_data'),
+        require('space.02_customers'),
+        require('space.03_numerical'),
+    }
+
+    for _, space in ipairs(spaces) do
+        space.reinit()
+        space.fill_data()
     end
-
-    box.schema.space.create('data', {if_not_exists = true})
-    box.space['data']:format({
-        {name = 'id', type = 'unsigned'},
-        {name = 'payload', type = 'string'},
-    })
-    box.space['data']:create_index('pk', {parts = {'id'}, if_not_exists = true})
-
-    box.space['data']:replace({1, 's1 s2'})
-    box.space['data']:replace({2, '1w 2w3wwwwww'})
 end

@@ -1,11 +1,16 @@
-local function migration()
-    local FUNC_NAME = 'embed'
+local SPACE_NAME = 'numerical'
 
-    local space = box.space['data']
+local function migration(...)
+    local SPACE_NAME = ...
+
+    local space = box.space[SPACE_NAME]
 
     local old_format = space:format()
     local new_format = table.deepcopy(old_format)
-    new_format[2] = {name = 'payload', type = 'map'}
+    new_format[2].type = 'number'
+
+
+    local FUNC_NAME = 'embed'
 
     if box.schema.func.exists(FUNC_NAME) then
         box.func[FUNC_NAME]:drop()
@@ -17,11 +22,12 @@ local function migration()
         body = [[
         function(t)
             local payload = t[2]
-            local new_payload = {data = payload}
+            local new_payload = tonumber(t[2])
             return {t[1], new_payload}
         end
         ]],
     })
+
 
     space:upgrade({
         func = FUNC_NAME,
@@ -29,4 +35,4 @@ local function migration()
     })
 end
 
-return require('migrations.run_and_introspect')(migration)
+return require('migrations.run_and_introspect')(migration, SPACE_NAME)

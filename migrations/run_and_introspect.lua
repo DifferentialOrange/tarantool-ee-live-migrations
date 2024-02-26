@@ -7,17 +7,13 @@ local function connect()
     return conn
 end
 
-local function call(conn, func)
+local function call(conn, func, space_name)
     local func_dump = string.dump(func)
-    local _, err = conn:eval(func_dump)
+    local _, err = conn:eval(func_dump, {space_name})
     assert(err == nil, err)
 end
 
 local function introspect(conn, space_name)
-    if space_name == nil then
-        space_name = 'data'
-    end
-
     conn:reload_schema()
 
     local rows = conn.space[space_name]:select(nil, {limit = 1000})
@@ -34,16 +30,16 @@ local function cleanup(conn)
     assert(err == nil, err)
 end
 
-local function run_migration(func)
+local function run_migration(func, space_name)
     local conn = connect()
 
     print('Before migration:')
-    introspect(conn)
+    introspect(conn, space_name)
 
-    call(conn, func)
+    call(conn, func, space_name)
 
     print('After migration:')
-    introspect(conn)
+    introspect(conn, space_name)
 
     cleanup(conn)
 

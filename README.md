@@ -19,7 +19,7 @@ tt run --name storage-a-001 --config tarantool.yaml
 
 Run migration (with post-run cleanup):
 ```bash
-tt run migrations/0x_<something>.lua
+tt run migrations/<xx>_<yy>_<something>.lua
 ```
 Use a separate ternimal to execute code on the `storage-a-001` server.
 The numbers are just means to structure the code, they do not bear any meaning

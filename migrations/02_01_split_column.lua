@@ -1,12 +1,17 @@
-local function migration()
-    local FUNC_NAME = 'split'
+local SPACE_NAME = 'customers'
 
-    local space = box.space['data']
+local function migration(...)
+    local SPACE_NAME = ...
+
+    local space = box.space[SPACE_NAME]
 
     local old_format = space:format()
     local new_format = table.deepcopy(old_format)
     new_format[2] = {name = 'name', type = 'string'}
     new_format[3] = {name = 'surname', type = 'string'}
+
+
+    local FUNC_NAME = 'split'
 
     if box.schema.func.exists(FUNC_NAME) then
         box.func[FUNC_NAME]:drop()
@@ -38,10 +43,11 @@ local function migration()
         ]],
     })
 
+
     space:upgrade({
         func = FUNC_NAME,
         format = new_format,
     })
 end
 
-return require('migrations.run_and_introspect')(migration)
+return require('migrations.run_and_introspect')(migration, SPACE_NAME)
