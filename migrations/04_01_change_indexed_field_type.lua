@@ -10,7 +10,7 @@ local function migration(...)
     new_format[2].type = 'number'
 
 
-    local FUNC_NAME = 'embed'
+    local FUNC_NAME = 'cast_to_number'
 
     if box.schema.func.exists(FUNC_NAME) then
         box.func[FUNC_NAME]:drop()
